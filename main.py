@@ -18,7 +18,7 @@ face_detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_front
 model = tf.keras.models.load_model("cnnmodel.keras")
 
 #read song dataset
-music = pd.read_csv("C:/Users/ACER SWIFT X/Desktop/music recommendation/data_moods.csv")
+music = pd.read_csv("data_moods.csv")
 
 emotion_dict = {0: "Neutral", 1: "Happy", 2: "Surprise", 3: "Sad", 4: "Angry", 5: "Disgust", 6: "Fear"}
 
@@ -57,7 +57,6 @@ if app_mode == 'Home Page':
 elif app_mode == 'Real-time camera':    
     st.title('Real-time camera :')
     st.subheader('Your face have to be in the frame to be detected.')
-    #st.sidebar.header("Informations about the client :")
 
     image = st.camera_input(":blue[Capture Image : ] ")
 
@@ -123,15 +122,9 @@ elif app_mode == 'Image':
 
             # Resize
             roi_resized = cv2.resize(roi_gray_frame, (48, 48))
-            #st.image(roi_resized)
-            #roi_resized_rgb = cv2.cvtColor(roi_resized, cv2.COLOR_GRAY2RGB)
 
             # Expand dimensions to match model input shape
             roi_input = np.expand_dims(roi_resized, axis=0)
-
-            #image = cv2.resize(image, (48, 48))
-            # Expand dimensions to match model input shape
-            #img_input = np.expand_dims(image, axis=0)
 
             # Make prediction
             emotion_prediction = model.predict(roi_input)
